@@ -1,0 +1,55 @@
+# docker-compose.prod.yml
+
+version: '3.9'
+services:
+
+  db:
+    image: postgres:15
+    environment:
+    POSTGRES_DB: ${POSTGRES_DB:-todo}
+    POSTGRES_USER: ${POSTGRES_USER:-todo}
+    POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-todo}
+    volumes:
+      - pg_prod_data:/var/lib/postgresql/data
+    networks:
+      - todo-prod-net
+
+
+  backend:
+    build: ./backend
+    command: gunicorn todo_project.wsgi:application --bind 0.0.0.0:8000
+    volumes:
+      - ./backend/todo_project:/code/todo_project
+      - ./backend/todo_app:/code/todo_app
+      - ./backend/manage.py:/code/manage.py
+      - ./backend/scripts:/code/scripts
+    env_file: backend/.prod.env
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    networks:
+      - todo-prod-net
+
+
+  frontend:
+    build: ./frontend
+    volumes:
+      - ./frontend:/app
+      # anonymous volume (hide the host one)
+      - app/node_modules
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    networks:
+      - todo-prod-net
+
+
+volumes:
+  pg_prod_data:
+
+
+networks:
+  todo-prod-net:
+    driver: bridge

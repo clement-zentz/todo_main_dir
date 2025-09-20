@@ -1,0 +1,44 @@
+# frontend/todo_front/.gitignore
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# SWC (cache et config)
+.swc/
+*.swc
+.swcrc
+
+# TypeScript
+*.tsbuildinfo
+tsconfig.tsbuildinfo
+
+# Tests
+coverage/
+*.lcov
+.nyc_output/
+
+# Fichiers temporaires
+*.tmp
+*.bak

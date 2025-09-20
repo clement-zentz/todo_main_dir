@@ -1,0 +1,49 @@
+# backend/.gitignore
+
+# ===== Django =====
+# Base de données locale (SQLite par défaut)
+*.sqlite3
+db.sqlite3
+
+# Migrations (optionnel : à ignorer si générées automatiquement)
+# Conservez __init__.py pour que Django reconnaisse le dossier comme un package
+*/migrations/00*.py
+!*/migrations/__init__.py
+
+# Fichiers statiques collectés (générés par `collectstatic`)
+staticfiles/
+*.css.map
+*.js.map
+
+# Cache Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Environnement virtuel (si non à la racine)
+venv/
+.env/
+.env.local
+*.env
+
+# Logs et fichiers temporaires
+*.log
+*.pot
+*.pyo
+*.pyd
+.Python
+debug.log
+*.swo
+*.swp
+
+# Fichiers IDE/éditeurs
+.idea/
+.vscode/
+.DS_Store
+
+# Cache Django (si utilisé)
+.cache/
+
+# Fichiers de build (ex: pour Docker)
+Dockerfile
+.dockerignore

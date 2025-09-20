@@ -1,0 +1,16 @@
+# .dockerignore
+
+ignore
+
+.vscode
+
+# ---------- backend ----------
+backend/venv
+# django
+__pycache__
+*.pyc
+*.log
+
+
+# ---------- frontend ----------
+frontend/todo_front/node_modules

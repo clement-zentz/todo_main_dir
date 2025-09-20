@@ -1,0 +1,24 @@
+# .gitignore
+
+# ===== Global =====
+# Environnements virtuels (si à la racine)
+venv/
+.env
+
+# Fichiers système
+.DS_Store
+Thumbs.db
+
+# Fichiers IDE
+.idea/
+.vscode/
+
+# Logs
+*.log
+
+# Fichiers de backup
+*.bak
+*.backup
+
+# Custom
+ignore
