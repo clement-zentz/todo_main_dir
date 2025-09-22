@@ -28,7 +28,7 @@ print(f"DEBUG = {DEBUG}")
 ALLOWED_HOSTS = ['*']
 
 # ---------- CustomUser ----------
-# AUTH_USER_MODEL = 'todo_app.CustomUser'
+AUTH_USER_MODEL = 'todo_app.CustomUser'
 
 
 # ---------- START DRF ----------
@@ -42,10 +42,28 @@ CORS_ALLOWED_ORIGINS = [
 ROOT_URLCONF = "todo_project.urls"
 
 # DRF config optionnelle
+# REST_FRAMEWORK = {
+#     "DEFAULT_PERMISSION_CLASSES": [
+#         "rest_framework.permissions.AllowAny",
+#     ]
+# }
+
+# Configuration DRF pour utiliser JWT
 REST_FRAMEWORK = {
-    "DEFAULT_PERMISSION_CLASSES": [
-        "rest_framework.permissions.AllowAny",
-    ]
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+}
+
+# Paramètres JWT (optionnel)
+from datetime import timedelta
+SIMPLE_JWT = {
+    # Durée du token d'accès
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60), 
+    # Durée du token de rafraîchissement 
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+    # (Optional) Invalidate old refresh tokens after use.
+    'ROTATE_REFRESH_TOKENS': True,
 }
 # ---------- END DRF ---------- 
 
@@ -72,6 +90,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'rest_framework_simplejwt',
     "corsheaders",
     'todo_app',
 ]

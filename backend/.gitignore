@@ -7,7 +7,7 @@ db.sqlite3
 
 # Migrations (optionnel : à ignorer si générées automatiquement)
 # Conservez __init__.py pour que Django reconnaisse le dossier comme un package
-*/migrations/00*.py
+# */migrations/00*.py
 !*/migrations/__init__.py
 
 # Fichiers statiques collectés (générés par `collectstatic`)
