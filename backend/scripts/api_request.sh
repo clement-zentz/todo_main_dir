@@ -58,7 +58,7 @@ curl -X GET http://127.0.0.1:8000/api/todo_list/ \
   -H "Authorization: Bearer $ACCESS_TOKEN"
 
 
-# 4. Modifier un todo (remplace ID par un ID existant).
+# 4. Update one todo (remplace ID with an existing ID).
 curl -X PUT http://127.0.0.1:8000/api/todo_list/1/ \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer $ACCESS_TOKEN" \

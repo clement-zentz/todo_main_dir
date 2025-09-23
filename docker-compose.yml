@@ -1,0 +1,12 @@
+# docker-compose.yml
+
+version: '3.8'
+services:
+  db:
+    image: postgres:15
+
+  backend:
+    build: ./backend
+
+  frontend:
+    build: ./frontend

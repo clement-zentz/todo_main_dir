@@ -1,14 +1,32 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import TodoListPage from './pages/TodoListPage';
+import LoginPage from './pages/LoginPage';
 import './App.css'
-import TodoList from './components/TodoList'
 
-function App() {
+const queryClient = new QueryClient();
+
+const App: React.FC = () => {
+  const isAuthentificated = !!localStorage.getItem('access_token');
 
   return (
-    <TodoList />
-  )
-}
+    <QueryClientProvider client={queryClient}>
+      <Router>
+        <Routes>
+          <Route 
+            path="/todo_list"
+            element={isAuthentificated ? <TodoListPage /> : <Navigate to="/login/"/>}
+          />
+          <Route 
+            path="/login"
+            element={isAuthentificated ? <Navigate to="/todo_list" /> : <LoginPage />}
+          />
+          <Route path='*' element={<Navigate to="/todo_list" />} />
+        </Routes>
+      </Router>
+    </QueryClientProvider>
+  );
+};
 
 export default App

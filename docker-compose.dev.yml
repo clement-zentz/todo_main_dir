@@ -1,14 +1,15 @@
 # docker-compose.dev.yml
 
-version: '3.8'
+version: '3.9'
 services:
 
   db:
-    image: postgres:15
     environment:
-    POSTGRES_DB: ${POSTGRES_DB:-todo}
-    POSTGRES_USER: ${POSTGRES_USER:-todo}
-    POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-todo}
+      POSTGRES_DB: ${POSTGRES_DB:-todo}
+      POSTGRES_USER: ${POSTGRES_USER:-todo}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-todo}
+    ports:
+      - "5432:5432"
     volumes:
       - pg_dev_data:/var/lib/postgresql/data
     networks:
@@ -16,7 +17,6 @@ services:
 
 
   backend:
-    build: ./backend
     command: sh -c "python manage.py migrate && \
       python manage.py runserver 0.0.0.0:8000"
     volumes:
@@ -34,7 +34,6 @@ services:
 
 
   frontend:
-    build: ./frontend
     volumes:
       - ./frontend:/app
       # anonymous volume (hide the host one)

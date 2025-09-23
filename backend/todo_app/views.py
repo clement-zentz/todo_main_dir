@@ -15,7 +15,7 @@ class TodoViewSet(viewsets.ModelViewSet):
     serializer_class = TodoSerializer
     # ✅ Only logged in users can access.
     permission_classes = [permissions.IsAuthenticated]
-
+    
     def get_queryset(self):
         # ✅ Each user only sees their todos.
         return Todo.objects.filter(owner=self.request.user)

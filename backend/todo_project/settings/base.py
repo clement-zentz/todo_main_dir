@@ -31,7 +31,7 @@ ALLOWED_HOSTS = ['*']
 AUTH_USER_MODEL = 'todo_app.CustomUser'
 
 
-# ---------- START DRF ----------
+# # ---------- START DRF ----------
 CORS_ALLOWED_ORIGINS = [
     origin.strip() \
     for origin \
@@ -39,14 +39,9 @@ CORS_ALLOWED_ORIGINS = [
     if origin.strip()
 ]
 
-ROOT_URLCONF = "todo_project.urls"
+CORS_ALLOW_CREDENTIALS = True
 
-# DRF config optionnelle
-# REST_FRAMEWORK = {
-#     "DEFAULT_PERMISSION_CLASSES": [
-#         "rest_framework.permissions.AllowAny",
-#     ]
-# }
+ROOT_URLCONF = "todo_project.urls"
 
 # Configuration DRF pour utiliser JWT
 REST_FRAMEWORK = {
@@ -89,9 +84,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    "corsheaders",
     'rest_framework',
     'rest_framework_simplejwt',
-    "corsheaders",
     'todo_app',
 ]
 
