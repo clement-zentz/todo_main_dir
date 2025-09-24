@@ -2,12 +2,15 @@
 import React from "react";
 import { useTodos, useDeleteTodo, useUpdateTodo } from "@/hooks/useTodoApi";
 import { Todo } from "@/types";
+import TodoModal from "./TodoModal";
+import { useModal } from "@/hooks/useModal";
 
 
 const TodoList: React.FC = () => {
     const { data: todos, isLoading, error } = useTodos();
     const { mutate: deleteTodo } = useDeleteTodo();
-    const { mutate: updateTodo } = useUpdateTodo();
+    const { mutate: updateTodo, isPending: isUpdating } = useUpdateTodo();
+    const { isOpen, currentTodo, openModal, closeModal } = useModal();
 
     const handleToggleComplete = (todo: Todo) => {
         updateTodo({ id: todo.id, updatedTodo: { done: !todo.done } });
@@ -16,6 +19,16 @@ const TodoList: React.FC = () => {
     const handleDelete = (id: number) => {
         if (window.confirm('Are you sure you want to delete this todo ?')) {
             deleteTodo(id);
+        }
+    };
+
+    const handleUpdateTodo = (data: Omit<Todo, 'id' | 'owner' | 'created_at'>) => {
+        if (currentTodo) {
+            updateTodo(
+                {id: currentTodo.id, updatedTodo: data},
+                // close modal after success
+                { onSuccess: () => closeModal(), }
+            );
         }
     };
 
@@ -36,12 +49,29 @@ const TodoList: React.FC = () => {
                                 checked={todo.done}
                                 onChange={() => handleToggleComplete(todo)}
                             />
-                            <span>{todo.title}</span>
-                            <button onClick={() => handleDelete(todo.id)}>Delete</button>
+                            <div className="todo-content">
+                                <span className={todo.done ? 'strikethrough' : ''}>{todo.title}</span>
+                                {todo.description && (
+                                    <p className={`todo-description ${todo.done ? 'strikethrough' : ''}`}>
+                                        {todo.description}
+                                    </p>
+                                )}
+                            </div>
+                            <div className="todo-actions">
+                                <button onClick={() => openModal(todo)}>Edit</button>
+                                <button onClick={() => handleDelete(todo.id)}>Delete</button>
+                            </div>
                         </li>
                     ))}
                 </ul>
             )}
+            {/* Editing modal */}
+            <TodoModal
+                todo={currentTodo}
+                onClose={closeModal}
+                onSubmit={handleUpdateTodo}
+                isLoading={isUpdating}
+            />
         </div>
     );
 };

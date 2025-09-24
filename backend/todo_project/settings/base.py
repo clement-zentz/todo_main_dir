@@ -25,7 +25,7 @@ SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", "fallback-secret")
 DEBUG = int(os.environ.get("DJANGO_DEBUG", 0)) == 1
 print(f"DEBUG = {DEBUG}")
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = []
 
 # ---------- CustomUser ----------
 AUTH_USER_MODEL = 'todo_app.CustomUser'

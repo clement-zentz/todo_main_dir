@@ -14,6 +14,8 @@ body {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+/* ---------- Todo List ---------- */
+
 /* header logout button */
 header button {
   margin-bottom: 1rem;
@@ -21,6 +23,7 @@ header button {
 
 .todo-form {
   display: flex;
+  flex-direction: column;
   margin-bottom: 20px;
 }
 
@@ -50,11 +53,17 @@ header button {
   padding: 0;
 }
 
-.todo-list li {
+/* .todo-list li {
   display: flex;
   align-items: center;
   padding: 10px;
   border-bottom: 1px solid #eee;
+} */
+
+.todo-list li {
+  display: flex;
+  align-items: flex-start; /* Aligne en haut pour le texte multiline */
+  padding: 10px;
 }
 
 .todo-list li.completed span {
@@ -75,6 +84,34 @@ header button {
   padding: 5px 10px;
   cursor: pointer;
 }
+
+.todo-content {
+  flex: 1;
+  margin-left: 10px;
+}
+
+.todo-title {
+  font-weight: bold;
+  display: block;
+}
+
+.todo-description {
+  margin: 5px 0 0;
+  color: #666;
+  font-size: 0.9em;
+  white-space: pre-wrap; /* Conserve les sauts de ligne */
+}
+
+.todo-form textarea {
+  width: 100%;
+  margin-top: 10px;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  resize: vertical;
+}
+
+/* ---------- Login ---------- */
 
 .login-container {
   max-width: 400px;
@@ -113,4 +150,135 @@ header button {
 .error {
   color: #ff4444;
   margin-bottom: 10px;
+}
+
+/* ---------- Modal ---------- */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 100%;
+  max-width: 500px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.modal h2 {
+  margin-top: 0;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.form-group input[type="text"] {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.checkbox-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.modal-actions button {
+  padding: 8px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.modal-actions button:first-child {
+  background: #f0f0f0;
+}
+
+.modal-actions button:last-child {
+  background: #007bff;
+  color: white;
+}
+
+/* Style pour les actions des todos */
+.todo-actions {
+  margin-left: auto;
+  display: flex;
+  gap: 5px;
+}
+
+.todo-actions button {
+  padding: 5px 10px;
+  font-size: 0.8em;
+}
+
+.todo-actions button:first-child {
+  background: #28a745;
+  color: white;
+}
+
+.todo-actions button:last-child {
+  background: #ff4444;
+  color: white;
+}
+
+.modal textarea {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  resize: vertical; /* Permet de redimensionner verticalement */
+  min-height: 100px;
+  font-family: inherit;
+}
+
+.form-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+  align-items: center;
+}
+
+.description-toggle {
+  background: none;
+  border: none;
+  color: #007bff;
+  cursor: pointer;
+  text-decoration: underline;
+  padding: 0;
+  font-size: 0.9em;
+}
+
+#description-btn{
+  background: #db5f12;
+  text-decoration: none;
+}
+
+.strikethrough {
+    text-decoration: line-through;
 }
