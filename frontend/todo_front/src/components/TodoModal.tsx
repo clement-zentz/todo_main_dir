@@ -19,7 +19,7 @@ const TodoModal: React.FC<TodoModalProps> = ({ todo, onClose, onSubmit, isLoadin
         if (todo) {
             reset({
                 title: todo.title,
-                // ✅ Manage null case
+                // ✅ Manage empty string case
                 description: todo.description || '',
                 done: todo.done,
             });
