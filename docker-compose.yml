@@ -1,12 +1,11 @@
 # docker-compose.yml
 
-version: '3.8'
 services:
   db:
-    image: postgres:15
+    image: postgres:16
 
   backend:
     build: ./backend
 
   frontend:
-    build: ./frontend
+    build: ./frontend/todo_front

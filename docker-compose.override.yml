@@ -1,13 +1,10 @@
-# docker-compose.dev.yml
+# docker-compose.override.yml
 
-version: '3.9'
 services:
 
   db:
-    environment:
-      POSTGRES_DB: ${POSTGRES_DB:-todo}
-      POSTGRES_USER: ${POSTGRES_USER:-todo}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-todo}
+    env_file:
+      - ./backend/.dev.env
     ports:
       - "5432:5432"
     volumes:
@@ -17,14 +14,16 @@ services:
 
 
   backend:
-    command: sh -c "python manage.py migrate && \
+    command: sh -c "sleep 5 && python manage.py migrate && \
       python manage.py runserver 0.0.0.0:8000"
     volumes:
       - ./backend/todo_project:/code/todo_project
       - ./backend/todo_app:/code/todo_app
       - ./backend/manage.py:/code/manage.py
       - ./backend/scripts:/code/scripts
-    env_file: backend/.dev.env
+      - ./backend/.dev.env:/code/.dev.env
+    env_file:
+      - ./backend/.dev.env
     ports:
       - "8000:8000"
     depends_on:
@@ -35,13 +34,16 @@ services:
 
   frontend:
     volumes:
-      - ./frontend:/app
+      - ./frontend/todo_front:/app
       # anonymous volume (hide the host one)
-      - app/node_modules
+      - /app/node_modules
     ports:
-      - "3000:3000"
+      - "5173:5173"
     depends_on:
       - backend
+    environment:
+      # for hot reload on some systems (Linux)
+      - CHOKIDAR_USEPOLLING=true
     networks:
       - todo-dev-net
 

@@ -1,6 +1,7 @@
-import { defineConfig } from 'vite'
+import { defineConfig } from 'vitest/config'  // 👈 change l'import ici
 import react from '@vitejs/plugin-react-swc'
 import path from 'path';
+/// <reference types="vitest" />
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -15,5 +16,9 @@ export default defineConfig({
     proxy: {
       '/api': 'http://backend:8000'
     }
-  }
-})
+  },
+  test: {
+    environment: 'jsdom', // 👈 ajoute cette ligne
+    setupFiles: './src/setupTests.ts',
+  },
+});

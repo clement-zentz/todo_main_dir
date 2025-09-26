@@ -22,6 +22,7 @@ load_dotenv(BASE_DIR / ".dev.env")
 
 SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", "fallback-secret")
 
+
 DEBUG = int(os.environ.get("DJANGO_DEBUG", 0)) == 1
 print(f"DEBUG = {DEBUG}")
 
@@ -63,16 +64,18 @@ SIMPLE_JWT = {
 # ---------- END DRF ---------- 
 
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': os.environ.get('POSTGRES_DB'),
-#         'USER': os.environ.get('POSTGRES_USER'),
-#         'PASSWORD': os.environ.get('POSTGRES_PASSWORD'),
-#         'HOST': os.environ.get('DATABASE_HOST', 'db'),
-#         'PORT': os.environ.get('DATABASE_PORT', 5432),
-#     }
-# }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.environ.get('POSTGRES_DB'),
+        'USER': os.environ.get('POSTGRES_USER'),
+        'PASSWORD': os.environ.get('POSTGRES_PASSWORD'),
+        'HOST': os.environ.get('DATABASE_HOST'),
+        'PORT': os.environ.get('DATABASE_PORT'),
+    }
+}
+
+print(os.environ.get('POSTGRES_USER'))
 
 
 # Application definition
@@ -124,12 +127,12 @@ WSGI_APPLICATION = 'todo_project.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 
 
 # Password validation

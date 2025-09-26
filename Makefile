@@ -1,13 +1,26 @@
 # Makefile
 
 up:
-\tdocker-compose up --build
+	docker compose up --build
+
+restart:
+	docker compose restart
 
 down:
-\tdocker-compose down
+	docker compose down
+
+down-v:
+	docker compose down -v
 
 migrate:
-\tdocker-compose exec backend python manage.py migrate
+	docker compose exec backend python manage.py migrate
+
+bash:
+	docker compose exec backend bash
 
 superuser:
-\tdocker-compose exec backend python manage.py createsuperuser
+	docker compose exec backend python manage.py createsu
+
+psql:
+	docker compose exec db psql -U $(db_user) -d $(db_name)
+

@@ -6,6 +6,7 @@ ignore
 
 # ---------- backend ----------
 backend/venv
+
 # django
 __pycache__
 *.pyc
@@ -14,3 +15,4 @@ __pycache__
 
 # ---------- frontend ----------
 frontend/todo_front/node_modules
+

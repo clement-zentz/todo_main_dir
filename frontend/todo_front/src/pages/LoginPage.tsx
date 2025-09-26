@@ -24,7 +24,7 @@ const LoginPage: React.FC = () => {
             },
         });
     };
-
+    
     return (
         <div className="login-container">
             <h1>Login</h1>

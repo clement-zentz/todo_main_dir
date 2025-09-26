@@ -20,6 +20,9 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+# pytest
+.pytest_cache
+
 # Environnement virtuel (si non à la racine)
 venv/
 .env/
@@ -44,6 +47,3 @@ debug.log
 # Cache Django (si utilisé)
 .cache/
 
-# Fichiers de build (ex: pour Docker)
-Dockerfile
-.dockerignore
