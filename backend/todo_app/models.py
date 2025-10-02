@@ -20,7 +20,7 @@ class Todo(models.Model):
     def __str__(self):
         return self.title
     
-# use create_user and createsuperuser methods
+
 class CustomUser(AbstractUser):
     email = models.EmailField(unique=True)
     phone_number = models.CharField(max_length=20, blank=True)

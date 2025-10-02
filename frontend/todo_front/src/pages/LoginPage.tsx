@@ -44,6 +44,9 @@ const LoginPage: React.FC = () => {
                 <button type="submit" disabled={isPending}>
                     {isPending ? 'Login in progress...' : 'Login'}
                 </button>
+                <button type="button" onClick={() => navigate("/register")} style={{ marginTop: "1rem" }}>
+                    Register
+                </button>
             </form>
         </div>
     );

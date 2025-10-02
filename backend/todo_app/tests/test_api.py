@@ -79,3 +79,95 @@ def test_todo_api_user_filtering(api_client, user, todo, db):
     titles = [item["title"] for item in response.data]
     assert "Test Todo" in titles
     assert "Other Todo" not in titles
+
+
+# ---------------- Register endpoint tests ----------------
+
+@pytest.mark.django_db
+def test_register_success(api_client):
+    url = reverse("register")
+    payload = {
+        "username": "newuser",
+        "email": "newuser@example.com",
+        "password": "StrongPass123"
+    }
+    response = api_client.post(url, payload, format="json")
+    assert response.status_code == status.HTTP_201_CREATED
+    # Password must not be returned
+    assert "password" not in response.data
+    # User created
+    user = User.objects.get(email="newuser@example.com")
+    assert user.username == "newuser"
+    assert user.check_password("StrongPass123")
+    assert user.password != "StrongPass123"  # hashed
+
+@pytest.mark.django_db
+def test_register_missing_field(api_client):
+    url = reverse("register")
+    payload = {
+        # missing username
+        "email": "incomplete@example.com",
+        "password": "Pass12345"
+    }
+    response = api_client.post(url, payload, format="json")
+    assert response.status_code == status.HTTP_400_BAD_REQUEST
+    assert "username" in response.data
+
+@pytest.mark.django_db
+def test_register_duplicate_email(api_client, user):
+    url = reverse("register")
+    payload = {
+        "username": "another",
+        "email": user.email,  # duplicate
+        "password": "Pass12345"
+    }
+    response = api_client.post(url, payload, format="json")
+    assert response.status_code == status.HTTP_400_BAD_REQUEST
+    assert "email" in response.data
+
+@pytest.mark.django_db
+def test_register_duplicate_username(api_client, user):
+    url = reverse("register")
+    payload = {
+        "username": user.username,  # duplicate
+        "email": "unique@example.com",
+        "password": "Pass12345"
+    }
+    response = api_client.post(url, payload, format="json")
+    assert response.status_code == status.HTTP_400_BAD_REQUEST
+    assert "username" in response.data
+
+@pytest.mark.django_db
+def test_register_then_login(api_client):
+    register_url = reverse("register")
+    login_url = reverse("token_obtain_pair")
+    reg_payload = {
+        "username": "chainuser",
+        "email": "chain@example.com",
+        "password": "ChainPass123"
+    }
+    reg_resp = api_client.post(register_url, reg_payload, format="json")
+    assert reg_resp.status_code == status.HTTP_201_CREATED
+    login_payload = {
+        "email": "chain@example.com",
+        "password": "ChainPass123"
+    }
+    login_resp = api_client.post(login_url, login_payload, format="json")
+    assert login_resp.status_code == status.HTTP_200_OK
+    assert "access" in login_resp.data
+    assert "refresh" in login_resp.data
+
+@pytest.mark.django_db
+def test_register_password_not_plaintext(api_client):
+    url = reverse("register")
+    raw_password = "PlainCheck123"
+    payload = {
+        "username": "hashuser",
+        "email": "hash@example.com",
+        "password": raw_password
+    }
+    response = api_client.post(url, payload, format="json")
+    assert response.status_code == status.HTTP_201_CREATED
+    user = User.objects.get(email="hash@example.com")
+    assert user.password != raw_password
+    assert user.check_password(raw_password)

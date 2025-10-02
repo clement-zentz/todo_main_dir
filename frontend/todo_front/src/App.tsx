@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import TodoListPage from './pages/TodoListPage';
 import LoginPage from './pages/LoginPage';
+import RegisterPage from './pages/RegisterPage';
 import './App.css'
 
 const queryClient = new QueryClient();
@@ -23,6 +24,7 @@ const App: React.FC = () => {
             element={isAuthentificated ? <Navigate to="/todo_list" /> : <LoginPage />}
           />
           <Route path='*' element={<Navigate to="/todo_list" />} />
+          <Route path="/register" element={<RegisterPage />} />
         </Routes>
       </Router>
     </QueryClientProvider>

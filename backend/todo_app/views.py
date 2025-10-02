@@ -1,9 +1,12 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.contrib.auth import get_user_model
 # DRF
-from rest_framework import viewsets, permissions
+from rest_framework import viewsets, permissions, generics
 from .models import Todo
-from .serializers import TodoSerializer
+from .serializers import TodoSerializer, RegisterSerializer
+
+User = get_user_model()
 
 def home(request):
     return HttpResponse(
@@ -23,3 +26,7 @@ class TodoViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         # ✅ Automatically assigns the current user to the created todo.
         serializer.save(owner=self.request.user)
+
+class RegisterView(generics.CreateAPIView):
+    queryset = User.objects.all()
+    serializer_class = RegisterSerializer
