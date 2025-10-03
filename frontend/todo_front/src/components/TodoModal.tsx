@@ -32,10 +32,11 @@ const TodoModal: React.FC<TodoModalProps> = ({ todo, onClose, onSubmit, isLoadin
         <div className="modal-overlay">
             <div className="modal">
                 <h2>Edit Todo</h2>
-                <form onSubmit={handleSubmit(onSubmit)}>
+                <form onSubmit={handleSubmit(data => onSubmit(data))}>
                     <div className="form-group">
-                        <label>Title</label>
+                        <label htmlFor="modal-title">Title</label>
                         <input
+                            id="modal-title"
                             {...register('title', { required: 'title is mandatory' })} 
                             defaultValue={todo.title}
                             disabled={isLoading}
@@ -43,8 +44,9 @@ const TodoModal: React.FC<TodoModalProps> = ({ todo, onClose, onSubmit, isLoadin
                         {errors.title && <span className="error">{errors.title.message}</span>}
                     </div>
                     <div className="form-group">
-                        <label>Description (optionnal)</label>
+                        <label htmlFor="modal-description">Description (optionnal)</label>
                         <textarea 
+                            id="modal-description"
                             {...register('description')}
                             rows={4}
                             placeholder="Add a detailed description..."

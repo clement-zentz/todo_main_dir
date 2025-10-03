@@ -19,6 +19,7 @@ export default defineConfig({
   },
   test: {
     environment: 'jsdom', // 👈 ajoute cette ligne
-    setupFiles: './src/setupTests.ts',
+    globals: true,
+    setupFiles: './src/setupVitest.ts',
   },
 });

@@ -38,16 +38,16 @@ const RegisterPage: React.FC = () => {
       <h1>Register</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div>
-          <label>Username</label>
-          <input {...register("username", { required: true })} />
+          <label htmlFor="reg-username">Username</label>
+          <input id="reg-username" {...register("username", { required: true })} />
         </div>
         <div>
-          <label>Email</label>
-          <input type="email" {...register("email", { required: true })} />
+          <label htmlFor="reg-email">Email</label>
+          <input id="reg-email" type="email" {...register("email", { required: true })} />
         </div>
         <div>
-          <label>Password</label>
-          <input type="password" {...register("password", { required: true })} />
+          <label htmlFor="reg-password">Password</label>
+          <input id="reg-password" type="password" {...register("password", { required: true })} />
         </div>
         <button type="submit">Register</button>
         <button type="button" onClick={() => navigate("/login")} style={{ marginTop: "1rem" }}>
