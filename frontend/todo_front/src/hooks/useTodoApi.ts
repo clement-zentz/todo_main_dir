@@ -49,8 +49,18 @@ export const useDeleteTodo = () => {
 
 export const useLogin = () => {
     return useMutation<AuthTokens, Error, LoginCredentials>({
-        mutationFn: (credentials: LoginCredentials) =>
-            api.post('login/', credentials).then((res) => res.data),    
+        mutationFn: async (credentials: LoginCredentials) => {
+            try {
+                const res = await api.post('login/', credentials);
+                return res.data;
+            } catch (err: any) {
+                const message =
+                    err?.response?.data?.detail ||
+                    err?.response?.data?.error ||
+                    'Identifiants invalides';
+                throw new Error(message);
+            }
+        },
     });
 };
 

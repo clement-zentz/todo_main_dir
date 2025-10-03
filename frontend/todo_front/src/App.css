@@ -113,7 +113,7 @@ header button {
 
 /* ---------- Login ---------- */
 
-.login-container {
+.login-container, .register-container {
   max-width: 400px;
   margin: 50px auto;
   padding: 20px;
@@ -122,23 +122,23 @@ header button {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.login-container label {
+.login-container label, .register-container label {
   margin-right: 1rem;
 }
 
-.login-container form {
+.login-container form, .register-container form {
   display: flex;
   flex-direction: column;
 }
 
-.login-container input {
+.login-container input, .register-container input {
   padding: 10px;
   margin-bottom: 10px;
   border: 1px solid #ddd;
   border-radius: 4px;
 }
 
-.login-container button {
+.login-container button, .register-container button {
   padding: 10px;
   background: #007bff;
   color: white;

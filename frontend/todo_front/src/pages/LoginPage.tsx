@@ -4,23 +4,19 @@ import { useForm } from "react-hook-form";
 import { useLogin } from "@/hooks/useTodoApi";
 import { LoginCredentials } from "@/types";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "@/context/AuthContext";
 
 const LoginPage: React.FC = () => {
     const { register, handleSubmit } = useForm<LoginCredentials>();
     const { mutate: login, isPending, error } = useLogin();
     const navigate = useNavigate();
+    const { login: saveTokens } = useAuth();
 
     const onSubmit = (data: LoginCredentials) => {
         login(data, {
             onSuccess: (tokens) => {
-                localStorage.setItem('access_token', tokens.access);
-                localStorage.setItem('refresh_token', tokens.refresh);
-                // TODO: replace page reload with navigate.
-                // Force reload to update App's auth state
-                window.location.href = '/todo_list';
-                // TODO: fix navigate.
-                // Manage authentication state in a React context.
-                navigate('/todo_list') // Redirect to list after login
+                saveTokens(tokens);
+                navigate('/todo_list', { replace: true });
             },
         });
     };
@@ -31,12 +27,17 @@ const LoginPage: React.FC = () => {
             {error && <div className="error">{error.message}</div>}
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div>
-                    <label>Username</label>
-                    <input {...register('email', { required: true })} />
+                    <label htmlFor="login-username">Username</label>
+                    <input
+                        id="login-username" 
+                        {...register('email', 
+                        { required: true })} 
+                    />
                 </div>
                 <div>
-                    <label>Password</label>
-                    <input 
+                    <label htmlFor="login-password">Password</label>
+                    <input
+                        id="login-password" 
                         type="password"
                         {...register('password', { required: true })}
                     />
