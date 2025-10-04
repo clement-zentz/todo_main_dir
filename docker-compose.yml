@@ -8,4 +8,4 @@ services:
     build: ./backend
 
   frontend:
-    build: ./frontend/todo_front
+    build: ./frontend

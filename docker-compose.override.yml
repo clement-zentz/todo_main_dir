@@ -34,7 +34,7 @@ services:
 
   frontend:
     volumes:
-      - ./frontend/todo_front:/app
+      - ./frontend:/app
       # anonymous volume (hide the host one)
       - /app/node_modules
     ports:
