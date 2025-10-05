@@ -1,0 +1,57 @@
+# docker-compose.prod.yml
+
+services:
+
+  db:
+    env_file:
+      - ./backend/.prod.env
+    ports:
+      - "5432:5432"
+    volumes:
+      - pg_prod_data:/var/lib/postgresql/data
+    networks:
+      - todo-prod-net
+
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.prod
+    command: > 
+      sh -c "python manage.py migrate && \
+      python manage.py collectstatic --noinput && \
+      gunicorn --bind 0.0.0.0:8000" todo_project.wsgi:application
+    env_file:
+      - ./backend/.prod.env
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    networks:
+      - todo-prod-net
+
+
+  frontend:
+    build: ./frontend
+    volumes:
+      - ./frontend:/app
+      # anonymous volume (hide the host one)
+      - /app/node_modules
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
+    environment:
+      # for hot reload on some systems (Linux)
+      - CHOKIDAR_USEPOLLING=true
+    networks:
+      - todo-prod-net
+
+
+volumes:
+  pg_prod_data:
+
+
+networks:
+  todo-prod-net:
+    driver: bridge

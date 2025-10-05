@@ -4,8 +4,6 @@ services:
   db:
     image: postgres:16
 
-  backend:
-    build: ./backend
+  backend: {}
 
-  frontend:
-    build: ./frontend
+  frontend: {}

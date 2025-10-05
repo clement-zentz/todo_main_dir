@@ -1,4 +1,4 @@
-# docker-compose.override.yml
+# docker-compose.dev.yml
 
 services:
 
@@ -14,14 +14,14 @@ services:
 
 
   backend:
-    command: sh -c "sleep 5 && python manage.py migrate && \
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.dev
+    command: > 
+      sh -c "python manage.py migrate && \
       python manage.py runserver 0.0.0.0:8000"
     volumes:
-      - ./backend/todo_project:/code/todo_project
-      - ./backend/todo_app:/code/todo_app
-      - ./backend/manage.py:/code/manage.py
-      - ./backend/scripts:/code/scripts
-      - ./backend/.dev.env:/code/.dev.env
+      - ./backend:/code
     env_file:
       - ./backend/.dev.env
     ports:
@@ -33,6 +33,8 @@ services:
 
 
   frontend:
+    build: ./frontend
+    command: npm run dev -- --host 0.0.0.0
     volumes:
       - ./frontend:/app
       # anonymous volume (hide the host one)

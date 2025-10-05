@@ -63,6 +63,7 @@ SIMPLE_JWT = {
 }
 # ---------- END DRF ---------- 
 
+print(f"POSTGRES_DB = {os.environ.get('POSTGRES_DB')}")
 
 DATABASES = {
     'default': {

@@ -1,26 +1,45 @@
 # Makefile
 
+env ?= dev
+
+COMPOSE_FILES = -f docker-compose.yml
+ifeq ($(env), dev)
+COMPOSE_FILES += -f docker-compose.dev.yml
+else ifeq ($(env), prod)
+COMPOSE_FILES += -f docker-compose.prod.yml
+else
+$(error Unknown env '$(env)' (expected dev or prod))
+endif
+
+DC = docker compose $(COMPOSE_FILES)
+
 up:
-	docker compose up --build
+	$(DC) up --build
+
+build:
+	$(DC) build -nocache
 
 restart:
-	docker compose restart
+	$(DC) restart
 
 down:
-	docker compose down
+	$(DC) down
 
 down-v:
-	docker compose down -v
+	$(DC) down -v
 
 migrate:
-	docker compose exec backend python manage.py migrate
+	$(DC) exec backend python manage.py migrate
+
+static:
+	$(DC) exec backend python manage.py collectstatic --noinput
 
 bash:
-	docker compose exec backend bash
+	$(DC) exec backend bash
 
 superuser:
-	docker compose exec backend python manage.py createsu
+	$(DC) exec backend python manage.py createsu
 
 psql:
-	docker compose exec db psql -U $(db_user) -d $(db_name)
+	$(DC) exec db psql -U $(db_user) -d $(db_name)
 

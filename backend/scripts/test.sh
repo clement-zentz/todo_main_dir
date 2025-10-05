@@ -8,6 +8,8 @@ set -euo pipefail
 
 ROOT_DIR=$(dirname $(dirname $(realpath $0)))
 
+echo "$ROOT_DIR"
+
 # load env var
 if [ -f "$ROOT_DIR/.dev.env" ]; then
     set -a
