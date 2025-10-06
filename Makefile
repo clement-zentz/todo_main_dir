@@ -14,13 +14,16 @@ endif
 DC = docker compose $(COMPOSE_FILES)
 
 up:
-	$(DC) up --build
+	$(DC) up -d --build
 
 build:
 	$(DC) build -nocache
 
 restart:
 	$(DC) restart
+
+logs:
+	$(DC) logs
 
 down:
 	$(DC) down

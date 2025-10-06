@@ -8,7 +8,7 @@ set -euo pipefail
 ROOT_DIR=$(dirname $(dirname $(dirname $(realpath $0))))
 
 set -a
-source "$ROOT_DIR/$ENV_PATH"
+source "$ROOT_DIR/.prod.env"
 set +a
 
 echo "🔐 Generating SSL certificates with Certbot for $DOMAIN..."

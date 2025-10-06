@@ -7,15 +7,13 @@ set -euo pipefail
 
 SCRIPT_PATH="$0"
 SCRIPT_DIR="$(dirname $SCRIPT_PATH)"
-PROJECT_ROOT_DIR="$(cd $SCRIPT_DIR/../.. && pwd)"
-
-ENV_PATH=".prod.env"
+BACKEND_ROOT_DIR="$(cd $SCRIPT_DIR/../.. && pwd)"
 
 set -a
-source "$PROJECT_ROOT_DIR/$ENV_PATH"
+source "$BACKEND_ROOT_DIR/.prod.env"
 set +a
 
-cd $PROJECT_ROOT_DIR
+cd $BACKEND_ROOT_DIR
 
 echo "📡 Starting to transfer $ENV_PATH to remote host."
 
@@ -26,7 +24,7 @@ ssh -p "$REMOTE_PORT" "$REMOTE_USER@$REMOTE_HOST" \
 
 scp -P "$REMOTE_PORT" \
     "$ENV_PATH" \
-    "$REMOTE_USER@$REMOTE_HOST:$REMOTE_PATH/$ENV_PATH"
+    "$REMOTE_USER@$REMOTE_HOST:$REMOTE_PATH/backend/$ENV_PATH"
 
 if [ $? -eq 0 ]; then
   echo "🎉 File transferred successfully."
@@ -35,5 +33,5 @@ else
 fi
 
 # Execute script:
-# chmod u+x scripts/scp_env_file.sh
-# ./scripts/scp_env_file.sh
+# chmod u+x backend/scripts/deploy/scp_env_files.sh
+# ./backend/scripts/deploy/scp_env_files.sh

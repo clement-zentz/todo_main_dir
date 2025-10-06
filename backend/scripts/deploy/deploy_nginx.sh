@@ -8,7 +8,7 @@ set -euo pipefail
 ROOT_DIR=$(dirname $(dirname $(dirname $(realpath $0))))
 
 set -a
-source "$ROOT_DIR/$ENV_PATH"
+source "$ROOT_DIR/.prod.env"
 set +a
 
 NGINX_CONF_SOURCE="$CONF_SRC_DIR/$DOMAIN.conf"
@@ -26,5 +26,5 @@ sudo systemctl reload nginx
 echo "✅ Nginx started with HTTP for $DOMAIN."
 
 # Execute this file:
-# chmod 740 scripts/sudo/deploy_nginx_conf.sh
-# ./scripts/sudo/deploy_nginx_conf.sh
+# chmod 740 backend/scripts/deploy/deploy_nginx_conf.sh
+# ./backend/scripts/deploy/deploy_nginx_conf.sh

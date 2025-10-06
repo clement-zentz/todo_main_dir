@@ -8,10 +8,8 @@ SCRIPT_PATH="$0"
 SCRIPT_DIR="$(dirname "$SCRIPT_PATH")"
 PROJECT_ROOT_DIR="$(cd "$SCRIPT_DIR/../.." && pwd)"
 
-ENV_PATH=".prod.env"
-
 set -a
-source "$PROJECT_ROOT_DIR/$ENV_PATH"
+source "$PROJECT_ROOT_DIR/.prod.env"
 set +a
 
 cd $PROJECT_ROOT_DIR
@@ -38,5 +36,5 @@ else
     echo "❌ Project directory sync failed."
 fi
 
-# chmod u+x scripts/rsync_project.sh
-# ./scripts/rsync_project.sh $1 (1=stage, 2=prod
+# chmod u+x backend/scripts/deploy/rsync_project.sh
+# ./backend/scripts/deploy/rsync_project.sh
