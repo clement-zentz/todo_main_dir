@@ -1,6 +1,5 @@
 #!/bin/bash
-
-# 1. rsync project folder to remote host
+# backend/scripts/deploy/rsync_project.sh
 
 set -euo pipefail
 

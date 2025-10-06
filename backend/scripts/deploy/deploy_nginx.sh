@@ -1,7 +1,5 @@
 #!/bin/bash
-# scripts/sudo/deploy_nginx_conf.sh
-
-# 2. Copie Nginx initial conf (HTTP only)
+# backend/scripts/deploy/deploy_nginx.sh
 
 set -euo pipefail
 

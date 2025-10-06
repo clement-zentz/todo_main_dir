@@ -1,7 +1,5 @@
 #!/bin/bash
-# scripts/sudo/generate_certs.sh
-
-# 3. Start Certbot to activate HTTPS
+# backend/scripts/deploy/gen_certs.sh
 
 set -euo pipefail
 

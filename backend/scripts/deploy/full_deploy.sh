@@ -1,4 +1,5 @@
 #!/bin/bash
+# backend/scripts/deploy/full_deploy.sh
 
 set -euo pipefail
 

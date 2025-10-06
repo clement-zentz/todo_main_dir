@@ -1,4 +1,5 @@
-# scripts/git_cmd/git_clone.sh
+#!/bin/bash
+# backend/scripts/deploy/git_clone.sh
 
 set -euo pipefail
 

@@ -1,7 +1,5 @@
 #!/bin/bash
-# scripts/scp_env_file.sh
-
-# 2. scp env file to remote host
+# backend/scripts/deploy/scp_env_files.sh
 
 set -euo pipefail
 
@@ -9,8 +7,10 @@ SCRIPT_PATH="$0"
 SCRIPT_DIR="$(dirname $SCRIPT_PATH)"
 BACKEND_ROOT_DIR="$(cd $SCRIPT_DIR/../.. && pwd)"
 
+ENV_PATH=".prod.env"
+
 set -a
-source "$BACKEND_ROOT_DIR/.prod.env"
+source "$BACKEND_ROOT_DIR/$ENV_PATH"
 set +a
 
 cd $BACKEND_ROOT_DIR
