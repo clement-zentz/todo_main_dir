@@ -11,17 +11,13 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
-from dotenv import load_dotenv
 import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 print(f"BASE_DIR = {BASE_DIR}")
-# load .env variable
-load_dotenv(BASE_DIR / ".dev.env")
 
 SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", "fallback-secret")
-
 
 DEBUG = int(os.environ.get("DJANGO_DEBUG", 0)) == 1
 print(f"DEBUG = {DEBUG}")
@@ -64,6 +60,7 @@ SIMPLE_JWT = {
 # ---------- END DRF ---------- 
 
 print(f"POSTGRES_DB = {os.environ.get('POSTGRES_DB')}")
+print(f"POSTGRE_USER = {os.environ.get('POSTGRES_USER')}")
 
 DATABASES = {
     'default': {
@@ -76,11 +73,7 @@ DATABASES = {
     }
 }
 
-print(os.environ.get('POSTGRES_USER'))
-
-
 # Application definition
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',

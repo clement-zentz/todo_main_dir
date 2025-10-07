@@ -10,7 +10,7 @@ source "$ROOT_DIR/.prod.env"
 set +a
 
 NGINX_CONF_SOURCE="$CONF_SRC_DIR/$DOMAIN.conf"
-NGINX_CONF_TARGET="$CONF_DST_DIR/$DOMAIN"
+NGINX_CONF_TARGET="$CONF_DST_DIR/$DOMAIN.conf"
 NGINX_CONF_ENABLED="$(dirname $CONF_DST_DIR)/sites-enabled/$DOMAIN"
 
 echo "📦 Deploying Nginx conf for $DOMAIN..."
@@ -24,5 +24,5 @@ sudo systemctl reload nginx
 echo "✅ Nginx started with HTTP for $DOMAIN."
 
 # Execute this file:
-# chmod 740 backend/scripts/deploy/deploy_nginx_conf.sh
-# ./backend/scripts/deploy/deploy_nginx_conf.sh
+# chmod 740 backend/scripts/deploy/deploy_nginx.sh
+# ./backend/scripts/deploy/deploy_nginx.sh

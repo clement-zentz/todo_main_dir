@@ -8,7 +8,7 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - pg_prod_data:/var/lib/postgresql/data
+      - todo_prod_data:/var/lib/postgresql/data
     networks:
       - todo-prod-net
 
@@ -17,14 +17,16 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile.prod
-    command: > 
+    command: >
       sh -c "python manage.py migrate && \
       python manage.py collectstatic --noinput && \
-      gunicorn --bind 0.0.0.0:8000" todo_project.wsgi:application
+      gunicorn todo_project.wsgi:application --bind 0.0.0.0:8000"
     env_file:
       - ./backend/.prod.env
+    environment:
+      - DJANGO_SETTINGS_MODULE=todo_project.settings.prod
     ports:
-      - "8000:8000"
+      - "8001:8000"
     depends_on:
       - db
     networks:
@@ -49,7 +51,7 @@ services:
 
 
 volumes:
-  pg_prod_data:
+  todo_prod_data:
 
 
 networks:
