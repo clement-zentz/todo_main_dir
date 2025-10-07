@@ -40,6 +40,9 @@ static:
 bash:
 	$(DC) exec backend bash
 
+shell:
+	$(DC) exec frontend sh
+
 superuser:
 	$(DC) exec backend python manage.py createsu
 

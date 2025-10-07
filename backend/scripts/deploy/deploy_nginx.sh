@@ -9,6 +9,8 @@ set -a
 source "$ROOT_DIR/.prod.env"
 set +a
 
+cd $ROOT_DIR
+
 NGINX_CONF_SOURCE="$CONF_SRC_DIR/$DOMAIN.conf"
 NGINX_CONF_TARGET="$CONF_DST_DIR/$DOMAIN.conf"
 NGINX_CONF_ENABLED="$(dirname $CONF_DST_DIR)/sites-enabled/$DOMAIN"
