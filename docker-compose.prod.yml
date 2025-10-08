@@ -8,9 +8,9 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - todo_prod_data:/var/lib/postgresql/data
+      - prod_data:/var/lib/postgresql/data
     networks:
-      - todo-prod-net
+      - prod-net
 
 
   backend:
@@ -28,9 +28,9 @@ services:
     depends_on:
       - db
     networks:
-      - todo-prod-net
+      - prod-net
     volumes:
-      - django_static:/code/staticfiles
+      - dj_prod_static:/code/staticfiles
 
 
   nginx:
@@ -40,19 +40,31 @@ services:
     depends_on:
       - backend
     networks:
-      - todo-prod-net
+      - prod-net
     ports:
-      - "8080:80"
+      - "80:80"
+      - "443:443"
     volumes:
-      - django_static:/static:ro
-      - ./nginx/nginx.container.conf:/etc/nginx/conf.d/default.conf:ro
+      - dj_prod_static:/static:ro
+      - ./nginx/nginx.prod.conf:/etc/nginx/conf.d/default.conf:ro
+      - letsencrypt:/etc/letsencrypt:ro
+      - certbot-webroot:/var/www/certbot:ro
 
+  certbot:
+    image: certbot/certbot:latest
+    volumes:
+      - letsencrypt:/etc/letsencrypt
+      - certbot-webroot:/var/www/certbot
+    networks:
+      - prod-net
 
 volumes:
-  todo_prod_data:
-  django_static:
+  prod_data:
+  dj_prod_static:
+  letsencrypt:
+  certbot-webroot:
 
 
 networks:
-  todo-prod-net:
+  prod-net:
     driver: bridge

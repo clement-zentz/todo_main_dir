@@ -8,9 +8,9 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - todo_dev_data:/var/lib/postgresql/data
+      - dev_data:/var/lib/postgresql/data
     networks:
-      - todo-dev-net
+      - dev-net
 
 
   backend:
@@ -31,7 +31,7 @@ services:
     depends_on:
       - db
     networks:
-      - todo-dev-net
+      - dev-net
 
 
   frontend:
@@ -49,13 +49,13 @@ services:
       # for hot reload on some systems (Linux)
       - CHOKIDAR_USEPOLLING=true
     networks:
-      - todo-dev-net
+      - dev-net
 
 
 volumes:
-  todo_dev_data:
+  dev_data:
 
 
 networks:
-  todo-dev-net:
+  dev-net:
     driver: bridge

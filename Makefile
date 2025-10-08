@@ -1,10 +1,14 @@
 # Makefile
+.PHONY: up build restart logs down down-v \
+migrate static bash shell superuser psql
 
 env ?= dev
 
 COMPOSE_FILES = -f docker-compose.yml
 ifeq ($(env), dev)
 COMPOSE_FILES += -f docker-compose.dev.yml
+else ifeq ($(env), stage)
+COMPOSE_FILES += -f docker-compose.stage.yml
 else ifeq ($(env), prod)
 COMPOSE_FILES += -f docker-compose.prod.yml
 else

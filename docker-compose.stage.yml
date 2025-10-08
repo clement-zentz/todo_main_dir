@@ -1,0 +1,58 @@
+# docker-compose.stage.yml
+
+services:
+
+  db:
+    env_file:
+      - ./backend/.stage.env
+    ports:
+      - "5432:5432"
+    volumes:
+      - stage_data:/var/lib/postgresql/data
+    networks:
+      - stage-net
+
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.prod
+    command: >
+      sh -c "python manage.py migrate && 
+      python manage.py collectstatic --noinput &&  
+      gunicorn todo_project.wsgi:application --bind 0.0.0.0:8000"
+    env_file:
+      - ./backend/.stage.env
+    environment:
+      - DJANGO_SETTINGS_MODULE=todo_project.settings.stage
+    depends_on:
+      - db
+    networks:
+      - stage-net
+    volumes:
+      - dj_stage_static:/code/staticfiles
+
+
+  nginx:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.prod
+    depends_on:
+      - backend
+    networks:
+      - stage-net
+    ports:
+      - "80:80"
+    volumes:
+      - dj_stage_static:/static:ro
+      - ./nginx/nginx.stage.conf:/etc/nginx/conf.d/default.conf:ro
+
+
+volumes:
+  stage_data:
+  dj_stage_static:
+
+
+networks:
+  stage-net:
+    driver: bridge
