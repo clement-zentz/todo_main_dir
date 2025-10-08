@@ -15,7 +15,8 @@ const RegisterPage: React.FC = () => {
 
   const onSubmit = async (data: RegisterForm) => {
     try {
-      const response = await fetch("http://localhost:8000/api/register/", {
+      const base = (import.meta as any).env?.VITE_API_BASE || '/api/';
+      const response = await fetch(`${base}register/`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),

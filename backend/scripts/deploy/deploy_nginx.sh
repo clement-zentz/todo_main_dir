@@ -3,10 +3,12 @@
 
 set -euo pipefail
 
-ROOT_DIR=$(dirname $(dirname $(dirname $(realpath $0))))
+SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+BACKEND_DIR="$(dirname "$(dirname "$SCRIPT_DIR")")"
+ROOT_DIR="$(dirname "$BACKEND_DIR")"
 
 set -a
-source "$ROOT_DIR/.prod.env"
+source "$BACKEND_DIR/.prod.env"
 set +a
 
 cd $ROOT_DIR

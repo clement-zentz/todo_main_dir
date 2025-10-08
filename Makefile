@@ -14,7 +14,7 @@ endif
 DC = docker compose $(COMPOSE_FILES)
 
 up:
-	$(DC) up -d
+	$(DC) up --build -d
 
 build:
 	$(DC) build --no-cache
@@ -23,7 +23,7 @@ restart:
 	$(DC) restart
 
 logs:
-	$(DC) logs $(c_name)
+	$(DC) logs
 
 down:
 	$(DC) down

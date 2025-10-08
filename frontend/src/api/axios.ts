@@ -2,7 +2,7 @@ import axios from 'axios'
 
 // Base config
 const api = axios.create({
-    baseURL: 'http://127.0.0.1:8000/api/',
+    baseURL: (import.meta as any).env?.VITE_API_BASE || '/api/',
 });
 
 // Interceptor to add JWT token
@@ -45,9 +45,7 @@ api.interceptors.response.use(
 
                 try {
                     originalRequest._retry = true;
-                    const response = await axios.post('http://127.0.0.1:8000/api/refresh/', {
-                        refresh: refreshToken,
-                    });
+                    const response = await api.post('refresh/', { refresh: refreshToken });
                     const newAccessToken = response.data.access;
                     localStorage.setItem('access_token', newAccessToken);
                     originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;

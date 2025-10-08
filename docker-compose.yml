@@ -5,5 +5,3 @@ services:
     image: postgres:16
 
   backend: {}
-
-  frontend: {}

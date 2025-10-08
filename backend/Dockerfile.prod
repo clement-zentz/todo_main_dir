@@ -1,10 +1,22 @@
-# backend/Dockerfile.prod
+FROM python:3.11-slim AS builder
+ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1
+WORKDIR /app
+# Dépendances compilation (psycopg2, etc.)
+RUN apt-get update && apt-get install -y --no-install-recommends build-essential libpq-dev && rm -rf /var/lib/apt/lists/*
+COPY requirements.txt .
+RUN pip install --upgrade pip && pip wheel --no-cache-dir --no-deps -r requirements.txt -w /wheels
+COPY . .
 
 FROM python:3.11-slim
-ENV PYTHONDONTWRITEBYTECODE 1
-ENV PYTHONUNBUFFERED 1
+ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1
 WORKDIR /code
-COPY requirements.txt /code/
-RUN pip install --upgrade pip && pip install -r requirements.txt
-COPY . /code/
-# CMD ["gunicorn", "--bind", "0.0.0.0:8000", "todo_projet.wsgi:application"]
+# Runtime libs minimales
+RUN apt-get update && apt-get install -y --no-install-recommends libpq5 && rm -rf /var/lib/apt/lists/*
+COPY --from=builder /wheels /wheels
+RUN pip install --no-cache-dir /wheels/*
+COPY --from=builder /app /code
+# User non-root
+RUN useradd -m appuser && chown -R appuser /code
+USER appuser
+# Démarrage Gunicorn par défaut (peut être override dans compose)
+CMD ["gunicorn", "todo_project.wsgi:application", "--bind", "0.0.0.0:8000"]

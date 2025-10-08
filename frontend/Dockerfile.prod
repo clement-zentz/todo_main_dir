@@ -1,4 +1,3 @@
-# Étape build
 FROM node:20-alpine AS build
 WORKDIR /app
 COPY package*.json ./
@@ -6,4 +5,9 @@ RUN npm ci
 COPY . .
 RUN npm run build
 
+FROM nginx:1.27-alpine
+# Copie du build Vite/React
 COPY --from=build /app/dist /usr/share/nginx/html
+# (Optionnel) en prod: retirer la liste par répertoire
+RUN sed -i 's/ autoindex on;//g' /etc/nginx/nginx.conf || true
+# Tu montes (ou copies) un fichier de conf séparé si besoin via docker-compose
