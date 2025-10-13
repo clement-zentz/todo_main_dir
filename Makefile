@@ -18,7 +18,7 @@ endif
 DC = docker compose $(COMPOSE_FILES)
 
 up:
-	$(DC) up --build -d
+	$(DC) up -d
 
 build:
 	$(DC) build --no-cache
@@ -45,7 +45,7 @@ bash:
 	$(DC) exec backend bash
 
 shell:
-	$(DC) exec frontend sh
+	$(DC) exec nginx sh
 
 superuser:
 	$(DC) exec backend python manage.py createsu

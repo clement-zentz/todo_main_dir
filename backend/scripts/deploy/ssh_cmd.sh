@@ -10,15 +10,8 @@ set +a
 
 ssh $REMOTE_USER@$REMOTE_HOST -p $REMOTE_PORT
 
-# copy past in order:
-#____________________
-
 # cd backend/scripts/deploy
 # chmod 740 *.sh
-
-# ./deploy_nginx.sh
-# ./gen_certs.sh
-# ./cp_statics.sh
 
 # cd ../../../
 # make down env=prod
