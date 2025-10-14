@@ -3,6 +3,7 @@
 services:
 
   db:
+    image: postgres:16
     env_file:
       - ./backend/.stage.env
     ports:
@@ -33,19 +34,19 @@ services:
       - dj_stage_static:/code/staticfiles
 
 
-  nginx:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile.prod
-    ports:
-      - "80:80"
-    depends_on:
-      - backend
-    networks:
-      - stage-net
-    volumes:
-      - dj_stage_static:/static:ro
-      - ./nginx/nginx.stage.conf:/etc/nginx/conf.d/default.conf:ro
+  # nginx:
+  #   build:
+  #     context: ./frontend
+  #     dockerfile: Dockerfile.prod
+  #   ports:
+  #     - "80:80"
+  #   depends_on:
+  #     - backend
+  #   networks:
+  #     - stage-net
+  #   volumes:
+  #     - dj_stage_static:/static:ro
+  #     - ./nginx/nginx.stage.conf:/etc/nginx/conf.d/default.conf:ro
 
 
 volumes:

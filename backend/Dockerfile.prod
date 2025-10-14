@@ -20,8 +20,5 @@ RUN apt-get update && \
 COPY --from=builder /wheels /wheels
 RUN pip install --no-cache-dir /wheels/*
 COPY --from=builder /app /code
-# User non-root
-RUN useradd -m appuser && chown -R appuser /code
-USER appuser
 # Démarrage Gunicorn par défaut (peut être override dans compose)
 CMD ["gunicorn", "todo_project.wsgi:application", "--bind", "0.0.0.0:8000"]

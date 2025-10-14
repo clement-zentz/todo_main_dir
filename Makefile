@@ -4,13 +4,12 @@ migrate static bash shell superuser psql
 
 env ?= dev
 
-COMPOSE_FILES = -f docker-compose.yml
 ifeq ($(env), dev)
-COMPOSE_FILES += -f docker-compose.dev.yml
+COMPOSE_FILES = -f docker-compose.dev.yml
 else ifeq ($(env), stage)
-COMPOSE_FILES += -f docker-compose.stage.yml
+COMPOSE_FILES = -f docker-compose.stage.yml
 else ifeq ($(env), prod)
-COMPOSE_FILES += -f docker-compose.prod.yml
+COMPOSE_FILES = -f docker-compose.prod.yml
 else
 $(error Unknown env '$(env)' (expected dev or prod))
 endif

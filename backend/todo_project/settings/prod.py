@@ -11,6 +11,8 @@ ALLOWED_HOSTS = split_env_list("ALLOWED_HOSTS") or ["localhost"]
 CORS_ALLOWED_ORIGINS = split_env_list("CORS_ALLOWED_ORIGINS")
 CSRF_TRUSTED_ORIGINS = split_env_list("CSRF_TRUSTED_ORIGINS")
 
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
